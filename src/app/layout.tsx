@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { GlobalProvider } from "@/context/globalContext";
+// import ClientOnlySessionProvider from "../../components/ClientOnlySessionProvider";
+import { UserProvider } from "@auth0/nextjs-auth0/client";
 import ClientOnlySessionProvider from "../../components/ClientOnlySessionProvider";
 
 const geistSans = localFont({
@@ -26,14 +28,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <GlobalProvider>
-          <ClientOnlySessionProvider>{children}</ClientOnlySessionProvider>
-        </GlobalProvider>
-      </body>
-    </html>
+    <ClientOnlySessionProvider>
+      <html lang="en">
+        <UserProvider>
+          <body
+            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          >
+            <GlobalProvider>{children}</GlobalProvider>
+          </body>
+        </UserProvider>
+      </html>
+    </ClientOnlySessionProvider>
   );
 }

@@ -13,9 +13,6 @@ export async function POST(request: Request) {
       );
     }
 
-    // Here you should add your logic to verify email and password
-    // For demonstration purposes, we assume authentication is successful
-
     const token = jwt.sign({ userId: 1 }, "secretkey", {
       expiresIn: "1h",
     });
